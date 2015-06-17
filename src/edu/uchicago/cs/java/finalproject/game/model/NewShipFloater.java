@@ -69,7 +69,7 @@ public class NewShipFloater extends Sprite {
 
 		//adding expire functionality
 		if (getExpire() == 0)
-			Cc.movFloaters.remove(this);
+			Cc.opsList.add(this, CollisionOp.Operation.REMOVE);
 		else
 			setExpire(getExpire() - 1);
 

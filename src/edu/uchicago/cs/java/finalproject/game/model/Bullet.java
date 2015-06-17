@@ -50,7 +50,8 @@ public Bullet(Falcon fal){
 		super.move();
 
 		if (getExpire() == 0)
-			Cc.movFriends.remove(this);
+			Cc.opsList.add(this, CollisionOp.Operation.REMOVE);
+
 		else
 			setExpire(getExpire() - 1);
 

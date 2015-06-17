@@ -56,7 +56,8 @@ public class Cc {
 
 		if (getNumFalcons() != 0) {
 			falShip = new Falcon();
-			movFriends.add(falShip);
+			//movFriends.add(falShip);
+			Cc.opsList.add(falShip, CollisionOp.Operation.ADD);
 			if (!bFirst)
 			    setNumFalcons(getNumFalcons() - 1);
 		}

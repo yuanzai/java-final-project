@@ -83,9 +83,10 @@ public class Cruise extends Sprite {
 			setDeltaY(getDeltaY() * 1.07);
 		}
 
-		//implementing the expire functionality, added by Dmitriy
+
 		if (getExpire() == 0)
-			Cc.movFriends.remove(this);
+			Cc.opsList.add(this, CollisionOp.Operation.REMOVE);
+
 		else
 			setExpire(getExpire() - 1);
 
