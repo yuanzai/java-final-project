@@ -42,9 +42,6 @@ public class Cc {
 
 
 
-
-
-
 	public static void initGame(){
 		setLevel(1);
 		setScore(0);

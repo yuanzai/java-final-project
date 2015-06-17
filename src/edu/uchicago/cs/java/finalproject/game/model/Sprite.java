@@ -13,11 +13,12 @@ public abstract class Sprite implements Movable {
 	//every sprite needs to know about the size of the gaming environ
 	private Dimension dim; //dim of the gaming environment
 
+	//we need to know what team we're on
+	private Team mTeam;
+
 	//the radius of circumscibing circle
 	private int nRadius;
-	//is this DEBRIS, FRIEND, FOE, OR FLOATER 
-	//private byte yFriend;
-	//degrees (where the sprite is pointing out of 360)
+
 	private int nOrientation;
 	private int nExpiry; //natural mortality (short-living objects)
 	//the color of this sprite
@@ -40,6 +41,17 @@ public abstract class Sprite implements Movable {
 	private Point[] pntCoords; //an array of points used to draw polygon
 	private int[] nXCoords;
 	private int[] nYCoords;
+
+
+	@Override
+	public Team getTeam() {
+		//default
+	  return mTeam;
+	}
+
+	public void setTeam(Team team){
+		mTeam = team;
+	}
 
 	public void move() {
 
