@@ -2,14 +2,16 @@ package edu.uchicago.cs.java.finalproject.game.model;
 
 import java.util.ArrayList;
 import java.util.Queue;
+import edu.uchicago.cs.java.finalproject.game.model.Movable;
 
 /**
  * Created by ag on 6/17/2015.
  */
-public class GameArrayList<E> extends ArrayList<E> {
+public class GameArrayList extends ArrayList {
 
 
-    private Queue mQueue;
+    //each GameArrayList knows about this queue of operaitons
+    private Queue<CollisionOp> mQueue;
 
 
     public GameArrayList(Queue queue) {
@@ -18,33 +20,24 @@ public class GameArrayList<E> extends ArrayList<E> {
         mQueue = queue;
     }
 
-
-
-
-    @Override
-    public boolean add(E e) {
-        return mQueue.add(e);
+    //overloaded to take another capacity
+    public GameArrayList(Queue queue, int cap) {
+        super(cap);
+        mQueue = queue;
     }
 
-    @Override
-    public boolean remove(Object o) {
-        return super.remove(o);
+
+
+    public boolean add(Movable mov) {
+        return mQueue.add(new CollisionOp(mov, CollisionOp.Operation.ADD ));
     }
 
-    @Override
-    public E remove(int index) {
-        return super.remove(index);
+
+    public boolean remove(Movable mov) {
+        return mQueue.add(new CollisionOp(mov, CollisionOp.Operation.REMOVE));
     }
 
-    @Override
-    public void add(int index, E element) {
-        super.add(index, element);
-    }
 
-    @Override
-    public E set(int index, E element) {
-        return super.set(index, element);
-    }
 
 
 }

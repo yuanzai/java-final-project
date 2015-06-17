@@ -23,7 +23,6 @@ public class Cc {
 	
 
 
-
 	//added by Dmitriy
 	private static Cc instance = null;
 
