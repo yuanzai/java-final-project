@@ -42,7 +42,7 @@ public class Cc {
 
 
 
-	public static void initGame(){
+	public  void initGame(){
 		setLevel(1);
 		setScore(0);
 		setNumFalcons(3);
@@ -51,7 +51,7 @@ public class Cc {
 	
 	// The parameter is true if this is for the beginning of the game, otherwise false
 	// When you spawn a new falcon, you need to decrement its number
-	public static void spawnFalcon(boolean bFirst) {
+	public  void spawnFalcon(boolean bFirst) {
 
 		if (getNumFalcons() != 0) {
 			falShip = new Falcon();
@@ -64,86 +64,86 @@ public class Cc {
 
 	}
 	
-	public static void clearAll(){
+	public  void clearAll(){
 		movDebris.clear();
 		movFriends.clear();
 		movFoes.clear();
 		movFloaters.clear();
 	}
 
-	public static boolean isPlaying() {
+	public  boolean isPlaying() {
 		return bPlaying;
 	}
 
-	public static void setPlaying(boolean bPlaying) {
+	public  void setPlaying(boolean bPlaying) {
 		Cc.bPlaying = bPlaying;
 	}
 
-	public static boolean isPaused() {
+	public  boolean isPaused() {
 		return bPaused;
 	}
 
-	public static void setPaused(boolean bPaused) {
+	public  void setPaused(boolean bPaused) {
 		Cc.bPaused = bPaused;
 	}
 	
-	public static boolean isGameOver() {		//if the number of falcons is zero, then game over
+	public  boolean isGameOver() {		//if the number of falcons is zero, then game over
 		if (getNumFalcons() == 0) {
 			return true;
 		}
 		return false;
 	}
 
-	public static int getLevel() {
+	public  int getLevel() {
 		return nLevel;
 	}
 
-	public  static long getScore() {
+	public   long getScore() {
 		return lScore;
 	}
 
-	public static void setScore(long lParam) {
+	public  void setScore(long lParam) {
 		lScore = lParam;
 	}
 
-	public static void setLevel(int n) {
+	public  void setLevel(int n) {
 		nLevel = n;
 	}
 
-	public static int getNumFalcons() {
+	public  int getNumFalcons() {
 		return nNumFalcon;
 	}
 
-	public static void setNumFalcons(int nParam) {
+	public  void setNumFalcons(int nParam) {
 		nNumFalcon = nParam;
 	}
 	
-	public static Falcon getFalcon(){
+	public  Falcon getFalcon(){
 		return falShip;
 	}
 	
-	public static void setFalcon(Falcon falParam){
+	public  void setFalcon(Falcon falParam){
 		falShip = falParam;
 	}
 
-	public static CopyOnWriteArrayList<Movable> getMovDebris() {
+	public  CopyOnWriteArrayList<Movable> getMovDebris() {
 		return movDebris;
 	}
 
 
 
-	public static CopyOnWriteArrayList<Movable> getMovFriends() {
+	public  CopyOnWriteArrayList<Movable> getMovFriends() {
 		return movFriends;
 	}
 
 
 
-	public static CopyOnWriteArrayList<Movable> getMovFoes() {
+	public  CopyOnWriteArrayList<Movable> getMovFoes() {
 		return movFoes;
 	}
 
 
-	public static CopyOnWriteArrayList<Movable> getMovFloaters() {
+	public  CopyOnWriteArrayList<Movable> getMovFloaters() {
 		return movFloaters;
 	}
 
