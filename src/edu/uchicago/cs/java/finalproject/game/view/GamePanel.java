@@ -6,6 +6,7 @@ import edu.uchicago.cs.java.finalproject.game.model.Falcon;
 import edu.uchicago.cs.java.finalproject.game.model.Movable;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
@@ -108,9 +109,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 	
 	//for each movable array, process it.
-	private void iterateMovables(Graphics g, CopyOnWriteArrayList<Movable>...movMovz){
+	private void iterateMovables(Graphics g, ArrayList<Movable>...movMovz){
 		
-		for (CopyOnWriteArrayList<Movable> movMovs : movMovz) {
+		for (ArrayList<Movable> movMovs : movMovz) {
 			for (Movable mov : movMovs) {
 
 				mov.move();

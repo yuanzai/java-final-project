@@ -2,6 +2,7 @@ package edu.uchicago.cs.java.finalproject.game.model;
 
 import edu.uchicago.cs.java.finalproject.sounds.Sound;
 
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 // I only want one Command Center and therefore this is a perfect candidate for static
@@ -15,11 +16,11 @@ public class Cc {
 	private static boolean bPlaying;
 	private static boolean bPaused;
 	
-	// These ArrayLists are thread-safe
-	public static CopyOnWriteArrayList<Movable> movDebris = new CopyOnWriteArrayList<Movable>();
-	public static CopyOnWriteArrayList<Movable> movFriends = new CopyOnWriteArrayList<Movable>();
-	public static CopyOnWriteArrayList<Movable> movFoes = new CopyOnWriteArrayList<Movable>();
-	public static CopyOnWriteArrayList<Movable> movFloaters = new CopyOnWriteArrayList<Movable>();
+	// These ArrayLists with capacities set
+	public static ArrayList<Movable> movDebris = new ArrayList<Movable>(300);
+	public static ArrayList<Movable> movFriends = new ArrayList<Movable>(100);
+	public static ArrayList<Movable> movFoes = new ArrayList<Movable>(200);
+	public static ArrayList<Movable> movFloaters = new ArrayList<Movable>(50);
 	
 
 
@@ -125,24 +126,24 @@ public class Cc {
 		falShip = falParam;
 	}
 
-	public  CopyOnWriteArrayList<Movable> getMovDebris() {
+	public  ArrayList<Movable> getMovDebris() {
 		return movDebris;
 	}
 
 
 
-	public  CopyOnWriteArrayList<Movable> getMovFriends() {
+	public  ArrayList<Movable> getMovFriends() {
 		return movFriends;
 	}
 
 
 
-	public  CopyOnWriteArrayList<Movable> getMovFoes() {
+	public  ArrayList<Movable> getMovFoes() {
 		return movFoes;
 	}
 
 
-	public  CopyOnWriteArrayList<Movable> getMovFloaters() {
+	public  ArrayList<Movable> getMovFloaters() {
 		return movFloaters;
 	}
 

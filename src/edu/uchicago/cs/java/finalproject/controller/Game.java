@@ -464,11 +464,11 @@ public class Game implements Runnable, KeyListener {
 
 class Tuple{
 	//this can be any one of several CopyOnWriteArrayList<Movable>
-	private CopyOnWriteArrayList<Movable> movMovs;
+	private ArrayList<Movable> movMovs;
 	//this is the target movable object to remove
 	private Movable movTarget;
 	
-	public Tuple(CopyOnWriteArrayList<Movable> movMovs, Movable movTarget) {
+	public Tuple(ArrayList<Movable> movMovs, Movable movTarget) {
 		this.movMovs = movMovs;
 		this.movTarget = movTarget;
 	}
