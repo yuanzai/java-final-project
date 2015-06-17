@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class GameOpsList extends LinkedList {
 
-    public void add(Movable mov, CollisionOp.Operation operation) {
+    public void enqueue(Movable mov, CollisionOp.Operation operation) {
         addLast(new CollisionOp(mov, operation));
     }
 

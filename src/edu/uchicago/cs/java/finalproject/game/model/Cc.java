@@ -3,7 +3,6 @@ package edu.uchicago.cs.java.finalproject.game.model;
 import edu.uchicago.cs.java.finalproject.sounds.Sound;
 
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 // I only want one Command Center and therefore this is a perfect candidate for static
 // Able to get access to methods and my movMovables ArrayList from the static context.
@@ -56,8 +55,8 @@ public class Cc {
 
 		if (getNumFalcons() != 0) {
 			falShip = new Falcon();
-			//movFriends.add(falShip);
-			Cc.opsList.add(falShip, CollisionOp.Operation.ADD);
+			//movFriends.enqueue(falShip);
+			Cc.opsList.enqueue(falShip, CollisionOp.Operation.ADD);
 			if (!bFirst)
 			    setNumFalcons(getNumFalcons() - 1);
 		}
