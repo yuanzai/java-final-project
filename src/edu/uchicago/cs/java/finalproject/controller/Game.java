@@ -244,8 +244,9 @@ public class Game implements Runnable, KeyListener {
 
 		}
 
-		//call garbage collection
-		System.gc();
+		//call garbage collectionn every so often to clean things
+		if (nTick % 9131 == 0 )
+		     System.gc();
 		
 	}//end meth
 
