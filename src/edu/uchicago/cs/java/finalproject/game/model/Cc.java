@@ -21,6 +21,8 @@ public class Cc {
 	public static ArrayList<Movable> movFriends = new ArrayList<Movable>(100);
 	public static ArrayList<Movable> movFoes = new ArrayList<Movable>(200);
 	public static ArrayList<Movable> movFloaters = new ArrayList<Movable>(50);
+
+	public static GameOpsList opsList = new GameOpsList();
 	
 
 
@@ -31,7 +33,6 @@ public class Cc {
 	private Cc() {}
 
 
-	//added by Dmitriy
 	public static Cc getInstance(){
 		if (instance == null){
 			instance = new Cc();

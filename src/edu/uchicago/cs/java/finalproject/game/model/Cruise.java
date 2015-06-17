@@ -17,7 +17,7 @@ public class Cruise extends Sprite {
 	public Cruise(Falcon fal) {
 
 		super();
-
+		setTeam(Team.FRIEND);
 		//defined the points on a cartesean grid
 		ArrayList<Point> pntCs = new ArrayList<Point>();
 

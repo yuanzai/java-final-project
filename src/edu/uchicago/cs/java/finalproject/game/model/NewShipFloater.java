@@ -13,7 +13,7 @@ public class NewShipFloater extends Sprite {
 	public NewShipFloater() {
 
 		super();
-
+		setTeam(Team.FLOATER);
 		ArrayList<Point> pntCs = new ArrayList<Point>();
 		// top of ship
 		pntCs.add(new Point(5, 5));
@@ -86,15 +86,6 @@ public class NewShipFloater extends Sprite {
 
 
 
-	//Commented out by Dmitriy
-	//override the expire method - once an object expires, then remove it from the arrayList.
-	//@Override
-	/*public void expire() {
-		if (getExpire() == 0)
-			Cc.movFloaters.remove(this);
-		else
-			setExpire(getExpire() - 1);
-	}*/
 
 	@Override
 	public void draw(Graphics g) {

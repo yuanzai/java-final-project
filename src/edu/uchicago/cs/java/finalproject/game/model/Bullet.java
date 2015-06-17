@@ -13,7 +13,7 @@ public class Bullet extends Sprite {
 public Bullet(Falcon fal){
 		
 		super();
-		
+	    setTeam(Team.FRIEND);
 		
 		//defined the points on a cartesean grid
 		ArrayList<Point> pntCs = new ArrayList<Point>();

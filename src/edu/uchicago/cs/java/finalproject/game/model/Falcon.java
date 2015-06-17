@@ -41,7 +41,7 @@ public class Falcon extends Sprite {
 	
 	public Falcon() {
 		super();
-
+		setTeam(Team.FRIEND);
 		ArrayList<Point> pntCs = new ArrayList<Point>();
 		
 		// top of ship

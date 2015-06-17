@@ -30,8 +30,9 @@ public class Game implements Runnable, KeyListener {
 	private Thread thrAnim;
 	private int nLevel = 1;
 	private int nTick = 0;
-	private ArrayList<Tuple> tupMarkForRemovals;
-	private ArrayList<Tuple> tupMarkForAdds;
+	//private ArrayList<Tuple> tupMarkForRemovals;
+	//private ArrayList<Tuple> tupMarkForAdds;
+
 	private boolean bMuted = true;
 	
 
@@ -154,8 +155,8 @@ public class Game implements Runnable, KeyListener {
 		
 		//we use this ArrayList to keep pairs of movMovables/movTarget for either
 		//removal or insertion into our arrayLists later on
-		tupMarkForRemovals = new ArrayList<Tuple>();
-		tupMarkForAdds = new ArrayList<Tuple>();
+		//tupMarkForRemovals = new ArrayList<Tuple>();
+		//tupMarkForAdds = new ArrayList<Tuple>();
 
 		Point pntFriendCenter, pntFoeCenter;
 		int nFriendRadiux, nFoeRadiux;
@@ -174,14 +175,16 @@ public class Game implements Runnable, KeyListener {
 					//falcon
 					if ((movFriend instanceof Falcon) ){
 						if (!Cc.getInstance().getFalcon().getProtected()){
-							tupMarkForRemovals.add(new Tuple(Cc.getInstance().movFriends, movFriend));
+							Cc.opsList.add(movFriend, CollisionOp.Operation.REMOVE);
+							//tupMarkForRemovals.add(new Tuple(Cc.getInstance().movFriends, movFriend));
 							Cc.getInstance().spawnFalcon(false);
 							killFoe(movFoe);
 						}
 					}
 					//not the falcon
 					else {
-						tupMarkForRemovals.add(new Tuple(Cc.getInstance().movFriends, movFriend));
+						Cc.opsList.add(movFriend, CollisionOp.Operation.REMOVE);
+						//tupMarkForRemovals.add(new Tuple(Cc.getInstance().movFriends, movFriend));
 						killFoe(movFoe);
 					}//end else 
 
@@ -207,9 +210,9 @@ public class Game implements Runnable, KeyListener {
 	
 				//detect collision
 				if (pntFalCenter.distance(pntFloaterCenter) < (nFalRadiux + nFloaterRadiux)) {
-	
-					
-					tupMarkForRemovals.add(new Tuple(Cc.getInstance().movFloaters, movFloater));
+
+					Cc.opsList.add(movFloater, CollisionOp.Operation.REMOVE);
+					//tupMarkForRemovals.add(new Tuple(Cc.getInstance().movFloaters, movFloater));
 					Sound.playSound("pacman_eatghost.wav");
 	
 				}//end if 
@@ -218,13 +221,44 @@ public class Game implements Runnable, KeyListener {
 		
 		//remove these objects from their appropriate ArrayLists
 		//this happens after the above iterations are done
-		for (Tuple tup : tupMarkForRemovals) 
-			tup.removeMovable();
-		
-		//add these objects to their appropriate ArrayLists
-		//this happens after the above iterations are done
-		for (Tuple tup : tupMarkForAdds) 
-			tup.addMovable();
+//		for (Tuple tup : tupMarkForRemovals)
+//			tup.removeMovable();
+//
+//		//add these objects to their appropriate ArrayLists
+//		//this happens after the above iterations are done
+//		for (Tuple tup : tupMarkForAdds)
+//			tup.addMovable();
+
+		while(!Cc.opsList.isEmpty()){
+			CollisionOp cop = (CollisionOp)  Cc.opsList.removeFirst();
+			Movable mov = cop.getMovable();
+			CollisionOp.Operation operation = cop.getOperation();
+
+			switch (mov.getTeam()){
+				case FOE:
+					if (operation == CollisionOp.Operation.ADD){
+
+					} else {
+
+					}
+
+					break;
+				case FRIEND:
+
+					break;
+
+				case FLOATER:
+
+					break;
+
+				case DEBRIS:
+
+					break;
+
+
+			}
+
+		}
 
 		//call garbage collection
 		System.gc();
