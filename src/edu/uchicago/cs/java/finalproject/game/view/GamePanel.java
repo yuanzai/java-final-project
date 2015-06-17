@@ -54,8 +54,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 	private void drawScore(Graphics g) {
 		g.setColor(Color.white);
 		g.setFont(fnt);
-		if (Cc.getScore() != 0) {
-			g.drawString("SCORE :  " + Cc.getScore(), nFontWidth, nFontHeight);
+		if (Cc.getInstance().getScore() != 0) {
+			g.drawString("SCORE :  " + Cc.getInstance().getScore(), nFontWidth, nFontHeight);
 		} else {
 			g.drawString("NO SCORE", nFontWidth, nFontHeight);
 		}
@@ -75,9 +75,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 		drawScore(grpOff);
 		
-		if (!Cc.isPlaying()) {
+		if (!Cc.getInstance().isPlaying()) {
 			displayTextOnScreen();
-		} else if (Cc.isPaused()) {
+		} else if (Cc.getInstance().isPaused()) {
 			strDisplay = "Game Paused";
 			grpOff.drawString(strDisplay,
 					(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4);
@@ -89,15 +89,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 			//draw them in decreasing level of importance
 			//friends will be on top layer and debris on the bottom
 			iterateMovables(grpOff, 
-					   Cc.movDebris,
-			           Cc.movFloaters,
-			           Cc.movFoes,
-			           Cc.movFriends);
+					   Cc.getInstance().movDebris,
+			           Cc.getInstance().movFloaters,
+			           Cc.getInstance().movFoes,
+			           Cc.getInstance().movFriends);
 			
 			
 			drawNumberShipsLeft(grpOff);
-			if (Cc.isGameOver()) {
-				Cc.setPlaying(false);
+			if (Cc.getInstance().isGameOver()) {
+				Cc.getInstance().setPlaying(false);
 				//bPlaying = false;
 			}
 		}
@@ -124,7 +124,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 	// Draw the number of falcons left on the bottom-right of the screen. 
 	private void drawNumberShipsLeft(Graphics g) {
-		Falcon fal = Cc.getFalcon();
+		Falcon fal = Cc.getInstance().getFalcon();
 		double[] dLens = fal.getLengths();
 		int nLen = fal.getDegrees().length;
 		Point[] pntMs = new Point[nLen];
@@ -142,7 +142,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 		//set the color to white
 		g.setColor(Color.white);
 		//for each falcon left (not including the one that is playing)
-		for (int nD = 1; nD < Cc.getNumFalcons(); nD++) {
+		for (int nD = 1; nD < Cc.getInstance().getNumFalcons(); nD++) {
 			//create x and y values for the objects to the bottom right using cartesean points again
 			for (int nC = 0; nC < fal.getDegrees().length; nC++) {
 				nXs[nC] = pntMs[nC].x + Game.DIM.width - (20 * nD);
