@@ -90,10 +90,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 			//draw them in decreasing level of importance
 			//friends will be on top layer and debris on the bottom
 			iterateMovables(grpOff, 
-					   Cc.getInstance().movDebris,
-			           Cc.getInstance().movFloaters,
-			           Cc.getInstance().movFoes,
-			           Cc.getInstance().movFriends);
+					(ArrayList<Movable>)  Cc.getInstance().movDebris,
+					(ArrayList<Movable>)     Cc.getInstance().movFloaters,
+					(ArrayList<Movable>)      Cc.getInstance().movFoes,
+					(ArrayList<Movable>)       Cc.getInstance().movFriends);
 			
 			
 			drawNumberShipsLeft(grpOff);

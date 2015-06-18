@@ -3,6 +3,7 @@ package edu.uchicago.cs.java.finalproject.game.model;
 import edu.uchicago.cs.java.finalproject.sounds.Sound;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // I only want one Command Center and therefore this is a perfect candidate for static
 // Able to get access to methods and my movMovables ArrayList from the static context.
@@ -16,10 +17,10 @@ public class Cc {
 	private static boolean bPaused;
 	
 	// These ArrayLists with capacities set
-	public static ArrayList<Movable> movDebris = new ArrayList<Movable>(300);
-	public static ArrayList<Movable> movFriends = new ArrayList<Movable>(100);
-	public static ArrayList<Movable> movFoes = new ArrayList<Movable>(200);
-	public static ArrayList<Movable> movFloaters = new ArrayList<Movable>(50);
+	public static List<Movable> movDebris = new ArrayList<Movable>(300);
+	public static List<Movable> movFriends = new ArrayList<Movable>(100);
+	public static List<Movable> movFoes = new ArrayList<Movable>(200);
+	public static List<Movable> movFloaters = new ArrayList<Movable>(50);
 
 	public static GameOpsList opsList = new GameOpsList();
 	
@@ -127,24 +128,24 @@ public class Cc {
 		falShip = falParam;
 	}
 
-	public  ArrayList<Movable> getMovDebris() {
+	public  List<Movable> getMovDebris() {
 		return movDebris;
 	}
 
 
 
-	public  ArrayList<Movable> getMovFriends() {
+	public  List<Movable> getMovFriends() {
 		return movFriends;
 	}
 
 
 
-	public  ArrayList<Movable> getMovFoes() {
+	public  List<Movable> getMovFoes() {
 		return movFoes;
 	}
 
 
-	public  ArrayList<Movable> getMovFloaters() {
+	public  List<Movable> getMovFloaters() {
 		return movFloaters;
 	}
 
