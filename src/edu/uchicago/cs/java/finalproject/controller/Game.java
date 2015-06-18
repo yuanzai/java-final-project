@@ -200,7 +200,7 @@ public class Game implements Runnable, KeyListener {
 		
 
 
-		//we are dequeuing the opsList and performing operations in serial to avoid mutating while iterating above
+		//we are dequeuing the opsList and performing operations in serial to avoid mutating the movable arraylists while iterating them above
 		while(!Cc.getInstance().getOpsList().isEmpty()){
 			CollisionOp cop = (CollisionOp)  Cc.getInstance().getOpsList().removeFirst();
 			Movable mov = cop.getMovable();
@@ -273,15 +273,14 @@ public class Game implements Runnable, KeyListener {
 			}
 			//remove the original Foe
 			Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
-			//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().getMovFoes(), movFoe));
+
 		
 			
 		} 
 		//not an asteroid
 		else {
 			//remove the original Foe
-			//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().getMovFoes(), movFoe));
-			Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+    		Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 		}
 		
 		
@@ -331,14 +330,13 @@ public class Game implements Runnable, KeyListener {
 		for (int nC = 0; nC < nNum; nC++) {
 			//Asteroids with size of zero are big
 			Cc.getInstance().getOpsList().enqueue(new Asteroid(0), CollisionOp.Operation.ADD);
-			//Cc.getInstance().getMovFoes().enqueue(new Asteroid(0));
+
 		}
 	}
 	
 	
 	private boolean isLevelClear(){
 		//if there are no more Asteroids on the screen
-		
 		boolean bAsteroidFree = true;
 		for (Movable movFoe : Cc.getInstance().getMovFoes()) {
 			if (movFoe instanceof Asteroid){
