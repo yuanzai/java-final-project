@@ -85,7 +85,7 @@ public class Cruise extends Sprite {
 
 
 		if (getExpire() == 0)
-			Cc.opsList.enqueue(this, CollisionOp.Operation.REMOVE);
+			Cc.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
 
 		else
 			setExpire(getExpire() - 1);

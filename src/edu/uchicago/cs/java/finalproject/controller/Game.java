@@ -141,8 +141,8 @@ public class Game implements Runnable, KeyListener {
 		Point pntFriendCenter, pntFoeCenter;
 		int nFriendRadiux, nFoeRadiux;
 
-		for (Movable movFriend : Cc.getInstance().movFriends) {
-			for (Movable movFoe : Cc.getInstance().movFoes) {
+		for (Movable movFriend : Cc.getInstance().getMovFriends()) {
+			for (Movable movFoe : Cc.getInstance().getMovFoes()) {
 
 				pntFriendCenter = movFriend.getCenter();
 				pntFoeCenter = movFoe.getCenter();
@@ -155,7 +155,7 @@ public class Game implements Runnable, KeyListener {
 					//falcon
 					if ((movFriend instanceof Falcon) ){
 						if (!Cc.getInstance().getFalcon().getProtected()){
-							Cc.opsList.enqueue(movFriend, CollisionOp.Operation.REMOVE);
+							Cc.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
 							//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().movFriends, movFriend));
 							Cc.getInstance().spawnFalcon(false);
 							killFoe(movFoe);
@@ -163,7 +163,7 @@ public class Game implements Runnable, KeyListener {
 					}
 					//not the falcon
 					else {
-						Cc.opsList.enqueue(movFriend, CollisionOp.Operation.REMOVE);
+						Cc.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
 						//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().movFriends, movFriend));
 						killFoe(movFoe);
 					}//end else 
@@ -183,15 +183,15 @@ public class Game implements Runnable, KeyListener {
 			Point pntFloaterCenter;
 			int nFloaterRadiux;
 			
-			for (Movable movFloater : Cc.getInstance().movFloaters) {
+			for (Movable movFloater : Cc.getInstance().getMovFloaters()) {
 				pntFloaterCenter = movFloater.getCenter();
 				nFloaterRadiux = movFloater.getRadius();
 	
 				//detect collision
 				if (pntFalCenter.distance(pntFloaterCenter) < (nFalRadiux + nFloaterRadiux)) {
 
-					Cc.opsList.enqueue(movFloater, CollisionOp.Operation.REMOVE);
-					//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().movFloaters, movFloater));
+					Cc.getInstance().getOpsList().enqueue(movFloater, CollisionOp.Operation.REMOVE);
+					//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().getMovFloaters(), movFloater));
 					Sound.playSound("pacman_eatghost.wav");
 	
 				}//end if 
@@ -201,41 +201,41 @@ public class Game implements Runnable, KeyListener {
 
 
 		//we are dequeuing the opsList and performing operations in serial to avoid mutating while iterating above
-		while(!Cc.opsList.isEmpty()){
-			CollisionOp cop = (CollisionOp)  Cc.opsList.removeFirst();
+		while(!Cc.getInstance().getOpsList().isEmpty()){
+			CollisionOp cop = (CollisionOp)  Cc.getInstance().getOpsList().removeFirst();
 			Movable mov = cop.getMovable();
 			CollisionOp.Operation operation = cop.getOperation();
 
 			switch (mov.getTeam()){
 				case FOE:
 					if (operation == CollisionOp.Operation.ADD){
-						Cc.movFoes.add(mov);
+						Cc.getInstance().getMovFoes().add(mov);
 					} else {
-						Cc.movFoes.remove(mov);
+						Cc.getInstance().getMovFoes().remove(mov);
 					}
 
 					break;
 				case FRIEND:
 					if (operation == CollisionOp.Operation.ADD){
-						Cc.movFriends.add(mov);
+						Cc.getInstance().getMovFriends().add(mov);
 					} else {
-						Cc.movFriends.remove(mov);
+						Cc.getInstance().getMovFriends().remove(mov);
 					}
 					break;
 
 				case FLOATER:
 					if (operation == CollisionOp.Operation.ADD){
-						Cc.movFloaters.add(mov);
+						Cc.getInstance().getMovFloaters().add(mov);
 					} else {
-						Cc.movFloaters.remove(mov);
+						Cc.getInstance().getMovFloaters().remove(mov);
 					}
 					break;
 
 				case DEBRIS:
 					if (operation == CollisionOp.Operation.ADD){
-						Cc.movDebris.add(mov);
+						Cc.getInstance().getMovDebris().add(mov);
 					} else {
-						Cc.movDebris.remove(mov);
+						Cc.getInstance().getMovDebris().remove(mov);
 					}
 					break;
 
@@ -259,29 +259,29 @@ public class Game implements Runnable, KeyListener {
 			//big asteroid 
 			if(astExploded.getSize() == 0){
 				//spawn two medium Asteroids
-				Cc.opsList.enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
-				Cc.opsList.enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
+				Cc.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
+				Cc.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
 
 			} 
 			//medium size aseroid exploded
 			else if(astExploded.getSize() == 1){
 				//spawn three small Asteroids
-				Cc.opsList.enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
-				Cc.opsList.enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
-				Cc.opsList.enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
+				Cc.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
+				Cc.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
+				Cc.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
 
 			}
 			//remove the original Foe
-			Cc.opsList.enqueue(movFoe, CollisionOp.Operation.REMOVE);
-			//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().movFoes, movFoe));
+			Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+			//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().getMovFoes(), movFoe));
 		
 			
 		} 
 		//not an asteroid
 		else {
 			//remove the original Foe
-			//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().movFoes, movFoe));
-			Cc.opsList.enqueue(movFoe, CollisionOp.Operation.REMOVE);
+			//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().getMovFoes(), movFoe));
+			Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 		}
 		
 		
@@ -310,8 +310,8 @@ public class Game implements Runnable, KeyListener {
 		//make the appearance of power-up dependent upon ticks and levels
 		//the higher the level the more frequent the appearance
 		if (nTick % (SPAWN_NEW_SHIP_FLOATER - nLevel * 7) == 0) {
-			//Cc.getInstance().movFloaters.enqueue(new NewShipFloater());
-			Cc.opsList.enqueue(new NewShipFloater(), CollisionOp.Operation.ADD);
+			//Cc.getInstance().getMovFloaters().enqueue(new NewShipFloater());
+			Cc.getInstance().getOpsList().enqueue(new NewShipFloater(), CollisionOp.Operation.ADD);
 		}
 	}
 
@@ -330,8 +330,8 @@ public class Game implements Runnable, KeyListener {
 	private void spawnAsteroids(int nNum) {
 		for (int nC = 0; nC < nNum; nC++) {
 			//Asteroids with size of zero are big
-			Cc.opsList.enqueue(new Asteroid(0), CollisionOp.Operation.ADD);
-			//Cc.getInstance().movFoes.enqueue(new Asteroid(0));
+			Cc.getInstance().getOpsList().enqueue(new Asteroid(0), CollisionOp.Operation.ADD);
+			//Cc.getInstance().getMovFoes().enqueue(new Asteroid(0));
 		}
 	}
 	
@@ -340,7 +340,7 @@ public class Game implements Runnable, KeyListener {
 		//if there are no more Asteroids on the screen
 		
 		boolean bAsteroidFree = true;
-		for (Movable movFoe : Cc.getInstance().movFoes) {
+		for (Movable movFoe : Cc.getInstance().getMovFoes()) {
 			if (movFoe instanceof Asteroid){
 				bAsteroidFree = false;
 				break;
@@ -433,14 +433,14 @@ public class Game implements Runnable, KeyListener {
 			switch (nKey) {
 			case FIRE:
 				//Cc.getInstance().movFriends.enqueue(new Bullet(fal));
-				Cc.opsList.enqueue(new Bullet(fal), CollisionOp.Operation.ADD);
+				Cc.getInstance().getOpsList().enqueue(new Bullet(fal), CollisionOp.Operation.ADD);
 				Sound.playSound("laser.wav");
 				break;
 				
 			//special is a special weapon, current it just fires the cruise missile. 
 			case SPECIAL:
 				//Cc.getInstance().movFriends.enqueue(new Cruise(fal));
-				Cc.opsList.enqueue(new Cruise(fal), CollisionOp.Operation.ADD);
+				Cc.getInstance().getOpsList().enqueue(new Cruise(fal), CollisionOp.Operation.ADD);
 				//Sound.playSound("laser.wav");
 				break;
 				
