@@ -23,20 +23,13 @@ public class CollisionOp {
     }
 
 
-    //getters and setters
+    //getters
     public Movable getMovable() {
         return mMovable;
-    }
-
-    public void setMovable(Movable movable) {
-        mMovable = movable;
     }
 
     public Operation getOperation() {
         return mOperation;
     }
 
-    public void setOperation(Operation operation) {
-        mOperation = operation;
-    }
 }

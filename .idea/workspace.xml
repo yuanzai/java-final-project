@@ -2,6 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="420c2601-0989-47fb-9e3b-6ca024476585" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/sounds/kapow.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.class" afterPath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/game/model/Falcon.class" afterPath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/game/model/Falcon.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/controller/Game$1.class" afterPath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/controller/Game$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/controller/Game$2.class" afterPath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/controller/Game$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/controller/Game.class" afterPath="$PROJECT_DIR$/out/production/baserefactoring2/edu/uchicago/cs/java/finalproject/controller/Game.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.java" afterPath="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Falcon.java" afterPath="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Falcon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/controller/Game.java" afterPath="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/controller/Game.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="ac65022c-b74c-4600-8091-1598705890ce" name="otherstuff" comment="" />
@@ -29,8 +38,8 @@
       <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/controller/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.66797644">
-              <caret line="253" column="8" selection-start-line="253" selection-start-column="8" selection-end-line="253" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.60903734">
+              <caret line="160" column="21" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -46,22 +55,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bullet.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Bullet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CollisionOp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding />
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding>
+                <element signature="e#602#603#0" expanded="true" />
+                <element signature="e#635#636#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,6 +73,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="268" column="19" selection-start-line="268" selection-start-column="19" selection-end-line="268" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Cruise.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Cruise.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="87" column="22" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -94,10 +106,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding>
-                <element signature="e#233#234#0" expanded="true" />
-                <element signature="e#289#290#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -106,15 +115,8 @@
         <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/NewShipFloater.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#334#341#0" expanded="false" />
-                <element signature="e#1525#1526#0" expanded="false" />
-                <element signature="e#1549#1550#0" expanded="false" />
-                <element signature="e#1584#1585#0" expanded="false" />
-                <element signature="e#1609#1610#0" expanded="false" />
-              </folding>
+              <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -124,13 +126,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="89" selection-end-column="65" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#2352#2353#0" expanded="false" />
-                <element signature="e#2376#2377#0" expanded="false" />
-                <element signature="e#2413#2414#0" expanded="false" />
-                <element signature="e#2438#2439#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -139,7 +135,7 @@
         <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Falcon.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="56" column="38" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -167,17 +163,17 @@
       <list>
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Movable.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Sprite.java" />
-        <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/GameArrayList.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/GameQueue.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Asteroid.java" />
-        <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Falcon.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/GameOpsList.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Cc.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Cruise.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/NewShipFloater.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/view/GamePanel.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Bullet.java" />
+        <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.java" />
+        <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Falcon.java" />
         <option value="$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/controller/Game.java" />
       </list>
     </option>
@@ -190,8 +186,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="45" />
-    <option name="y" value="25" />
+    <option name="x" value="202" />
+    <option name="y" value="77" />
     <option name="width" value="1598" />
     <option name="height" value="860" />
   </component>
@@ -352,6 +348,11 @@
     <property name="dynamic.classpath" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\java\2015\baserefactoring2\src\edu\uchicago\cs\java\finalproject\sounds" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Game">
     <configuration default="false" name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -639,7 +640,7 @@
       <option name="number" value="Default" />
       <updated>1434570629658</updated>
       <workItem from="1434570633079" duration="14990000" />
-      <workItem from="1434607236804" duration="1063000" />
+      <workItem from="1434607236804" duration="3181000" />
     </task>
     <task id="LOCAL-00001" summary="teams implemented">
       <created>1434572281534</created>
@@ -737,14 +738,20 @@
       <option name="project" value="LOCAL" />
       <updated>1434608296471</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="gc() called more frequently">
+      <created>1434608316579</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1434608316579</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16053000" />
+    <option name="totallyTimeSpent" value="18171000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="45" y="25" width="1598" height="860" extended-state="0" />
+    <frame x="202" y="77" width="1598" height="860" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -755,7 +762,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23897582" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23897582" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32859176" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30454546" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -801,7 +808,8 @@
     <MESSAGE value="removed static methods of Cc" />
     <MESSAGE value="cleaned up code" />
     <MESSAGE value="clean up more" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean up more" />
+    <MESSAGE value="gc() called more frequently" />
+    <option name="LAST_COMMIT_MESSAGE" value="gc() called more frequently" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -840,7 +848,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-          <folding />
+          <folding>
+            <element signature="e#602#603#0" expanded="true" />
+            <element signature="e#635#636#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -867,10 +878,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="e#233#234#0" expanded="true" />
-            <element signature="e#289#290#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -878,14 +886,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#334#341#0" expanded="false" />
-            <element signature="e#1525#1526#0" expanded="false" />
-            <element signature="e#1549#1550#0" expanded="false" />
-            <element signature="e#1584#1585#0" expanded="false" />
-            <element signature="e#1609#1610#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -893,13 +894,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="89" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2352#2353#0" expanded="false" />
-            <element signature="e#2376#2377#0" expanded="false" />
-            <element signature="e#2413#2414#0" expanded="false" />
-            <element signature="e#2438#2439#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -939,67 +934,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Cruise.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5686274">
-          <caret line="87" column="22" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/view/GamePanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Sprite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="268" column="19" selection-start-line="268" selection-start-column="19" selection-end-line="268" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Asteroid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="89" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2352#2353#0" expanded="false" />
-            <element signature="e#2376#2377#0" expanded="false" />
-            <element signature="e#2413#2414#0" expanded="false" />
-            <element signature="e#2438#2439#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/GameOpsList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="e#233#234#0" expanded="true" />
-            <element signature="e#289#290#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/NewShipFloater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#334#341#0" expanded="false" />
-            <element signature="e#1525#1526#0" expanded="false" />
-            <element signature="e#1549#1550#0" expanded="false" />
-            <element signature="e#1584#1585#0" expanded="false" />
-            <element signature="e#1609#1610#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1022,10 +961,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Falcon.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Asteroid.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="38" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="89" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding>
+            <element signature="e#602#603#0" expanded="true" />
+            <element signature="e#635#636#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Cruise.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="22" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/GameOpsList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1038,18 +1004,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/CollisionOp.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/NewShipFloater.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Sprite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="268" column="19" selection-start-line="268" selection-start-column="19" selection-end-line="268" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/game/model/Falcon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/uchicago/cs/java/finalproject/controller/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.66797644">
-          <caret line="253" column="8" selection-start-line="253" selection-start-column="8" selection-end-line="253" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.60903734">
+          <caret line="160" column="21" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
           <folding />
         </state>
       </provider>

@@ -44,31 +44,48 @@ public class Falcon extends Sprite {
 		setTeam(Team.FRIEND);
 		ArrayList<Point> pntCs = new ArrayList<Point>();
 		
-		// top of ship
-		pntCs.add(new Point(0, 18)); 
-		
-		//right points
-		pntCs.add(new Point(3, 3)); 
-		pntCs.add(new Point(12, 0)); 
-		pntCs.add(new Point(13, -2)); 
-		pntCs.add(new Point(13, -4)); 
-		pntCs.add(new Point(11, -2)); 
-		pntCs.add(new Point(4, -3)); 
-		pntCs.add(new Point(2, -10)); 
-		pntCs.add(new Point(4, -12)); 
-		pntCs.add(new Point(2, -13)); 
+		// Robert Alef's awesome falcon design
+		pntCs.add(new Point(0,9));
+		pntCs.add(new Point(-1, 6));
+		pntCs.add(new Point(-1,3));
+		pntCs.add(new Point(-4, 1));
+		pntCs.add(new Point(4,1));
+		pntCs.add(new Point(-4,1));
 
-		//left points
-		pntCs.add(new Point(-2, -13)); 
-		pntCs.add(new Point(-4, -12));
-		pntCs.add(new Point(-2, -10)); 
-		pntCs.add(new Point(-4, -3)); 
-		pntCs.add(new Point(-11, -2));
-		pntCs.add(new Point(-13, -4));
-		pntCs.add(new Point(-13, -2)); 
-		pntCs.add(new Point(-12, 0)); 
-		pntCs.add(new Point(-3, 3)); 
-		
+		pntCs.add(new Point(-4, -2));
+		pntCs.add(new Point(-1, -2));
+		pntCs.add(new Point(-1, -9));
+		pntCs.add(new Point(-1, -2));
+		pntCs.add(new Point(-4, -2));
+
+		pntCs.add(new Point(-10, -8));
+		pntCs.add(new Point(-5, -9));
+		pntCs.add(new Point(-7, -11));
+		pntCs.add(new Point(-4, -11));
+		pntCs.add(new Point(-2, -9));
+		pntCs.add(new Point(-2, -10));
+		pntCs.add(new Point(-1, -10));
+		pntCs.add(new Point(-1, -9));
+		pntCs.add(new Point(1, -9));
+		pntCs.add(new Point(1, -10));
+		pntCs.add(new Point(2, -10));
+		pntCs.add(new Point(2, -9));
+		pntCs.add(new Point(4, -11));
+		pntCs.add(new Point(7, -11));
+		pntCs.add(new Point(5, -9));
+		pntCs.add(new Point(10, -8));
+		pntCs.add(new Point(4, -2));
+
+		pntCs.add(new Point(1, -2));
+		pntCs.add(new Point(1, -9));
+		pntCs.add(new Point(1, -2));
+		pntCs.add(new Point(4,-2));
+
+
+		pntCs.add(new Point(4, 1));
+		pntCs.add(new Point(1, 3));
+		pntCs.add(new Point(1,6));
+		pntCs.add(new Point(0,9));
 
 		assignPolarPoints(pntCs);
 

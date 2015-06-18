@@ -62,7 +62,6 @@ public class Game implements Runnable, KeyListener {
 
 		gmpPanel = new GamePanel(DIM);
 		gmpPanel.addKeyListener(this);
-
 		clpThrust = Sound.clipForLoopFactory("whitenoise.wav");
 		clpMusicBackground = Sound.clipForLoopFactory("music-background.wav");
 	
@@ -156,21 +155,18 @@ public class Game implements Runnable, KeyListener {
 					if ((movFriend instanceof Falcon) ){
 						if (!Cc.getInstance().getFalcon().getProtected()){
 							Cc.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
-							//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().movFriends, movFriend));
 							Cc.getInstance().spawnFalcon(false);
-							killFoe(movFoe);
+
 						}
 					}
 					//not the falcon
 					else {
 						Cc.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
-						//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().movFriends, movFriend));
-						killFoe(movFoe);
-					}//end else 
+					}//end else
+					//kill the foe and if asteroid, then spawn new asteroids
+					killFoe(movFoe);
+					Sound.playSound("kapow.wav");
 
-					
-					
-				
 				}//end if 
 			}//end inner for
 		}//end outer for
@@ -191,7 +187,6 @@ public class Game implements Runnable, KeyListener {
 				if (pntFalCenter.distance(pntFloaterCenter) < (nFalRadiux + nFloaterRadiux)) {
 
 					Cc.getInstance().getOpsList().enqueue(movFloater, CollisionOp.Operation.REMOVE);
-					//tupMarkForRemovals.enqueue(new Tuple(Cc.getInstance().getMovFloaters(), movFloater));
 					Sound.playSound("pacman_eatghost.wav");
 	
 				}//end if 
@@ -243,10 +238,8 @@ public class Game implements Runnable, KeyListener {
 			}
 
 		}
-
-		//call garbage collectionn every so often to clean things
-		if (nTick % 31 == 0 )
-		     System.gc();
+		//a request to the JVM is made every frame to garbage collect, however, the JVM will choose when and how to do this
+		System.gc();
 		
 	}//end meth
 
@@ -271,25 +264,12 @@ public class Game implements Runnable, KeyListener {
 				Cc.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
 
 			}
-			//remove the original Foe
-			Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 
-		
-			
 		} 
-		//not an asteroid
-		else {
-			//remove the original Foe
-    		Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
-		}
-		
-		
-		
 
-		
-		
-		
-		
+		//remove the original Foe
+		Cc.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
+
 	}
 
 	//some methods for timing events in the game,
@@ -430,14 +410,12 @@ public class Game implements Runnable, KeyListener {
 		if (fal != null) {
 			switch (nKey) {
 			case FIRE:
-				//Cc.getInstance().movFriends.enqueue(new Bullet(fal));
 				Cc.getInstance().getOpsList().enqueue(new Bullet(fal), CollisionOp.Operation.ADD);
 				Sound.playSound("laser.wav");
 				break;
 				
 			//special is a special weapon, current it just fires the cruise missile. 
 			case SPECIAL:
-				//Cc.getInstance().movFriends.enqueue(new Cruise(fal));
 				Cc.getInstance().getOpsList().enqueue(new Cruise(fal), CollisionOp.Operation.ADD);
 				//Sound.playSound("laser.wav");
 				break;
@@ -475,34 +453,7 @@ public class Game implements Runnable, KeyListener {
 	// Just need it b/c of KeyListener implementation
 	public void keyTyped(KeyEvent e) {
 	}
-	
 
-	
 }
 
-// ===============================================
-// ==A tuple takes a reference to an ArrayList and a reference to a Movable
-//This class is used in the collision detection method, to avoid mutating the array list while we are iterating
-// it has two public methods that either remove or enqueue the movable from the appropriate ArrayList
-// ===============================================
 
-//class Tuple{
-//	//this can be any one of several CopyOnWriteArrayList<Movable>
-//	private ArrayList<Movable> movMovs;
-//	//this is the target movable object to remove
-//	private Movable movTarget;
-//
-//	public Tuple(ArrayList<Movable> movMovs, Movable movTarget) {
-//		this.movMovs = movMovs;
-//		this.movTarget = movTarget;
-//	}
-//
-//	public void removeMovable(){
-//		movMovs.remove(movTarget);
-//	}
-//
-//	public void addMovable(){
-//		movMovs.enqueue(movTarget);
-//	}
-//
-//}
