@@ -51,7 +51,6 @@ public Bullet(Falcon fal){
 
 		if (getExpire() == 0)
 			Cc.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
-
 		else
 			setExpire(getExpire() - 1);
 
