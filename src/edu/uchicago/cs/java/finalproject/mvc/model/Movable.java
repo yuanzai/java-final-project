@@ -1,4 +1,4 @@
-package edu.uchicago.cs.java.finalproject.game.model;
+package edu.uchicago.cs.java.finalproject.mvc.model;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package edu.uchicago.cs.java.finalproject.game.view;
+package edu.uchicago.cs.java.finalproject.mvc.view;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,6 +1,6 @@
-package edu.uchicago.cs.java.finalproject.game.model;
+package edu.uchicago.cs.java.finalproject.mvc.model;
 
-import edu.uchicago.cs.java.finalproject.controller.Game;
+import edu.uchicago.cs.java.finalproject.mvc.controller.Game;
 
 import java.awt.*;
 import java.util.ArrayList;

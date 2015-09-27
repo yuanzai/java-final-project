@@ -1,16 +1,15 @@
-package edu.uchicago.cs.java.finalproject.game.view;
+package edu.uchicago.cs.java.finalproject.mvc.view;
 
-import edu.uchicago.cs.java.finalproject.controller.Game;
-import edu.uchicago.cs.java.finalproject.game.model.Cc;
-import edu.uchicago.cs.java.finalproject.game.model.Falcon;
-import edu.uchicago.cs.java.finalproject.game.model.Movable;
+import edu.uchicago.cs.java.finalproject.mvc.controller.Game;
+import edu.uchicago.cs.java.finalproject.mvc.model.Cc;
+import edu.uchicago.cs.java.finalproject.mvc.model.Falcon;
+import edu.uchicago.cs.java.finalproject.mvc.model.Movable;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
- public class GamePanel extends Panel {
+public class GamePanel extends Panel {
 	
 	// ==============================================================
 	// FIELDS 

@@ -1,9 +1,9 @@
-package edu.uchicago.cs.java.finalproject.game.model;
+package edu.uchicago.cs.java.finalproject.mvc.model;
 
 
 import java.util.Arrays;
 
-import edu.uchicago.cs.java.finalproject.controller.Game;
+import edu.uchicago.cs.java.finalproject.mvc.controller.Game;
 
 public class Asteroid extends Sprite {
 

@@ -1,7 +1,7 @@
-package edu.uchicago.cs.java.finalproject.controller;
+package edu.uchicago.cs.java.finalproject.mvc.controller;
 
-import edu.uchicago.cs.java.finalproject.game.model.*;
-import edu.uchicago.cs.java.finalproject.game.view.GamePanel;
+import edu.uchicago.cs.java.finalproject.mvc.model.*;
+import edu.uchicago.cs.java.finalproject.mvc.view.GamePanel;
 import edu.uchicago.cs.java.finalproject.sounds.Sound;
 
 import javax.sound.sampled.Clip;
