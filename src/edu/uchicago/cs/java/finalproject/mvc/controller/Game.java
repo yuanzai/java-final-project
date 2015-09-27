@@ -197,7 +197,7 @@ public class Game implements Runnable, KeyListener {
 
 		//we are dequeuing the opsList and performing operations in serial to avoid mutating the movable arraylists while iterating them above
 		while(!Cc.getInstance().getOpsList().isEmpty()){
-			CollisionOp cop = (CollisionOp)  Cc.getInstance().getOpsList().dequeue();
+			CollisionOp cop =  Cc.getInstance().getOpsList().dequeue();
 			Movable mov = cop.getMovable();
 			CollisionOp.Operation operation = cop.getOperation();
 
