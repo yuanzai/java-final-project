@@ -8,6 +8,9 @@ import java.util.ArrayList;
 public abstract class Sprite implements Movable {
 	//the center-point of this sprite
 	private Point pntCenter;
+
+	private Point pntMapPosition;
+
 	//this causes movement; change in x and change in y
 	private double dDeltaX, dDeltaY;
 	//every sprite needs to know about the size of the gaming environ
@@ -19,10 +22,13 @@ public abstract class Sprite implements Movable {
 	//the radius of circumscibing circle
 	private int nRadius;
 
-	private int nOrientation;
+	private double nOrientation;
+
 	private int nExpiry; //natural mortality (short-living objects)
 	//the color of this sprite
 	private Color col;
+
+    boolean hitWall;
 
 	//radial coordinates
 	//this game uses radial coordinates to render sprites
@@ -43,6 +49,7 @@ public abstract class Sprite implements Movable {
 	private int[] nYCoords;
 
 
+
 	@Override
 	public Team getTeam() {
 		//default
@@ -56,25 +63,21 @@ public abstract class Sprite implements Movable {
 	public void move() {
 
 		Point pnt = getCenter();
-		double dX = pnt.x + getDeltaX();
-		double dY = pnt.y + getDeltaY();
-		
-		//this just keeps the sprite inside the bounds of the frame
-		if (pnt.x > getDim().width) {
-			setCenter(new Point(1, pnt.y));
+		Point mapPoint = getMapPosition();
 
-		} else if (pnt.x < 0) {
-			setCenter(new Point(getDim().width - 1, pnt.y));
-		} else if (pnt.y > getDim().height) {
-			setCenter(new Point(pnt.x, 1));
+		if (mapPoint.getX() + getDeltaX() <= 10 ) {
+			setDeltaX(0);
+            hitWall = true;
+		} else if (mapPoint.getX() + getDeltaX() >= Cc.getInstance().getMap().xBounds -10) {
+            setDeltaX(0);
+            hitWall = true;
+        }
 
-		} else if (pnt.y < 0) {
-			setCenter(new Point(pnt.x, getDim().height - 1));
-		} else {
+        double dX = pnt.x + getDeltaX();
+        double dY = pnt.y + getDeltaY();
 
-			setCenter(new Point((int) dX, (int) dY));
-		}
-
+        setMapPosition(new Point((int) (mapPoint.getX() + getDeltaX()), (int)(mapPoint.getY() + getDeltaY())));
+		setCenter(new Point((int) dX, (int) dY));
 	}
 
 	public Sprite() {
@@ -82,8 +85,8 @@ public abstract class Sprite implements Movable {
 	//you can override this and many more in the subclasses
 		setDim(Game.DIM);
 		setColor(Color.white);
-		setCenter(new Point(Game.R.nextInt(Game.DIM.width),
-				Game.R.nextInt(Game.DIM.height)));
+		//setCenter(new Point(Game.R.nextInt(Game.DIM.width),
+		//		Game.R.nextInt(Game.DIM.height)));
 
 
 	}
@@ -132,11 +135,11 @@ public abstract class Sprite implements Movable {
 	}
 
 
-	public int getOrientation() {
+	public double getOrientation() {
 		return nOrientation;
 	}
 
-	public void setOrientation(int n) {
+	public void setOrientation(double n) {
 		nOrientation = n;
 	}
 
@@ -181,6 +184,14 @@ public abstract class Sprite implements Movable {
 		pntCenter = pntParam;
 	}
 
+	public Point getMapPosition() {
+		return pntMapPosition;
+	}
+
+	public void setMapPosition(Point pntParam) {
+		pntMapPosition = pntParam;
+	}
+
 
 	public void setYcoord(int nValue, int nIndex) {
 		nYCoords[nIndex] = nValue;
@@ -222,11 +233,12 @@ public abstract class Sprite implements Movable {
 		return Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
 	}
 
+
 	
 	//utility function to convert from cartesian to polar
 	//since it's much easier to describe a sprite as a list of cartesean points
-	//sprites (except Asteroid) should use the cartesean technique to describe the coordinates
-	//see Falcon or Bullet constructor for examples
+	//sprites (except ) should use the cartesean technique to describe the coordinates
+
 	protected double[] convertToPolarDegs(ArrayList<Point> pntPoints) {
 
 		//ArrayList<Tuple<Double,Double>> dblCoords = new ArrayList<Tuple<Double,Double>>();
@@ -239,7 +251,7 @@ public abstract class Sprite implements Movable {
 		return dDegs;
 	}
 	//utility function to convert to polar
-	protected double[] convertToPolarLens(ArrayList<Point> pntPoints) {
+		protected double[] convertToPolarLens(ArrayList<Point> pntPoints) {
 
 		double[] dLens = new double[pntPoints.size()];
 
@@ -271,20 +283,16 @@ public abstract class Sprite implements Movable {
 		setLengths(convertToPolarLens(pntCs));
 
 	}
-	
 
-
-	
     public void draw(Graphics g) {
         nXCoords = new int[dDegrees.length];
         nYCoords = new int[dDegrees.length];
         //need this as well
         pntCoords = new Point[dDegrees.length];
-        
 
         for (int nC = 0; nC < dDegrees.length; nC++) {
-            nXCoords[nC] =    (int) (getCenter().x + getRadius() 
-                            * dLengths[nC] 
+            nXCoords[nC] =    (int) (getCenter().x + getRadius()
+                            *  dLengths[nC]
                             * Math.sin(Math.toRadians(getOrientation()) + dDegrees[nC]));
             nYCoords[nC] =    (int) (getCenter().y - getRadius()
                             * dLengths[nC]
@@ -295,11 +303,7 @@ public abstract class Sprite implements Movable {
             pntCoords[nC] = new Point(nXCoords[nC], nYCoords[nC]);
         }
         
-        
-        
 
-		
-        
         g.setColor(getColor());
         g.drawPolygon(getXcoords(), getYcoords(), dDegrees.length);
     }

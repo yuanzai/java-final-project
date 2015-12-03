@@ -2,6 +2,10 @@ package edu.uchicago.cs.java.finalproject.sounds;
 
 
 
+import javafx.scene.media.Media;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -10,6 +14,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javazoom.jl.player.Player;
 
 public class Sound {
 
@@ -67,8 +72,36 @@ public class Sound {
 		return clp;
 		
 	}
-	
-	
 
+
+
+
+
+	private String filename;
+	private Player player;
+
+	public void close() { if (player != null) player.close(); }
+
+	// play the MP3 file to the sound card
+	public void play(String filename) {
+		try {
+			FileInputStream fis     = new FileInputStream(Sound.class.getResource(filename).getFile());
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			player = new Player(bis);
+		}
+		catch (Exception e) {
+			System.out.println("Problem playing file " + filename);
+			System.out.println(e);
+		}
+
+		// run in new thread to play in background
+		new Thread() {
+			public void run() {
+				try { player.play(); }
+				catch (Exception e) { System.out.println(e); }
+			}
+		}.start();
+
+	}
 
 }

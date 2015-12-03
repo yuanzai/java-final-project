@@ -5,7 +5,7 @@ import java.awt.*;
 public interface Movable {
 
 	public static enum Team {
-		FRIEND, FOE, FLOATER, DEBRIS
+		FRIEND, FOE, FLOATER, DEBRIS, FRIENDLYFIRE, ENEMYFIRE, PLAYER
 	}
 
 	//for the game to move and draw movable objects
@@ -14,8 +14,10 @@ public interface Movable {
 
 	//for collision detection
 	public Point getCenter();
+	public void setCenter(Point point);
 	public int getRadius();
 	public Team getTeam();
 
+	public Point getMapPosition();
 
 } //end Movable
