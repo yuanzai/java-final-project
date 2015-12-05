@@ -1,9 +1,9 @@
 package edu.uchicago.cs.java.finalproject.mvc.model;
 
 import edu.uchicago.cs.java.finalproject.mvc.controller.Game;
+import edu.uchicago.cs.java.finalproject.sounds.Sound;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 /**
@@ -28,25 +28,20 @@ public class Player extends Character {
     public static final double STEP = 18;
     private final double JUMP = 85;
     private final int JUMP_FRAMES = 7;
-    private final int HITCOUNTS = 9;
+    private final int MAX_HIT_ANI_COUNTER = 9;
+    private int shieldCounter;
+
 
     public int currentWeapon;
     public int weapon1cooldown;
     public int weapon2cooldown;
     public int weapon3cooldown;
 
-    public int hitCounter;
+    public int hitAniCounter;
 
-    public Player(int x, int y) {
+    public Player(int x, int y, int lives) {
         super();
         setTeam(Team.PLAYER);
-
-        /*ArrayList<Point> pntCs = new ArrayList<Point>();
-        pntCs.add(new Point(15, 12));
-        pntCs.add(new Point(-15, 8));
-        pntCs.add(new Point(-15, -8));
-        pntCs.add(new Point(15, -8));
-        assignPolarPoints(pntCs);*/
         setColor(Color.white);
         setCenter(new Point(x, y));
         setMapPosition(new Point(x, y));
@@ -55,8 +50,9 @@ public class Player extends Character {
         weapon1cooldown = 0;
         weapon2cooldown = 0;
         weapon3cooldown = 0;
-        hitCounter = 0;
-        //bOnGround = false;
+        hitAniCounter = 0;
+        this.lives = lives;
+        shieldCounter = 3000/ Game.ANI_DELAY;
     }
 
     public Point getBasePoint() {
@@ -68,7 +64,6 @@ public class Player extends Character {
         Point center = getCenter();
         return new Point(center.x, center.y - getRadius());
     }
-
 
     public void preMove(){
         setOrientationToMouse();
@@ -84,7 +79,7 @@ public class Player extends Character {
         if (bUp && bOnGround && iJumpCounter ==0) {
             yAdj -= JUMP;
             iJumpCounter = JUMP_FRAMES;
-            //bOnGround = false;
+            Sound.playSound("jump.wav");
         } else if (iJumpCounter > 0) {
             iJumpCounter--;
             yAdj -= JUMP - (JUMP_FRAMES-iJumpCounter) * 10;
@@ -97,6 +92,8 @@ public class Player extends Character {
         //System.out.println("xAdj " + xAdj + "   yAdj "  + yAdj);
         setDeltaX( xAdj );
         setDeltaY( yAdj );
+        if (shieldCounter>0)
+            shieldCounter--;
     }
 
     public void weaponCooldown(){
@@ -122,7 +119,6 @@ public class Player extends Character {
     }
 
     public void pressUp() {
-        System.out.println("Press Up");
         bUp = true;
     }
     public void pressDown() {
@@ -194,26 +190,56 @@ public class Player extends Character {
         pntCs.add(new Point(0, 25));
         drawCustomPolygon(g,Color.white,2,90,pntCs,true);
 
+
+        if (shieldCounter > 0) {
+
+            pntCs = new ArrayList<Point>();
+            pntCs.add(new Point(0, 10));
+            pntCs.add(new Point(7, 7));
+            pntCs.add(new Point(10, 0));
+            pntCs.add(new Point(7, -7));
+            pntCs.add(new Point(0, -10));
+            pntCs.add(new Point(-7, -7));
+            pntCs.add(new Point(-10, 0));
+            pntCs.add(new Point(-7, 7));
+
+            Color myColour = new Color(34, 200, 196,100);
+            drawCustomPolygon(g,myColour,4,0,pntCs,true, (int) (getRadius() * 1.7));
+
+
+
+
+        }
+
         drawCrossHair(g);
 
-        if (hitCounter > 0 && hitCounter < HITCOUNTS) {
-            hitCounter++;
+        if (hitAniCounter > 0 && hitAniCounter < MAX_HIT_ANI_COUNTER) {
+            hitAniCounter++;
         } else {
-            hitCounter = 0;
+            hitAniCounter = 0;
         }
     }
 
     public void isHit() {
-        hitCounter = 1;
+        if (shieldCounter>0)
+            return;
+        hitAniCounter = 1;
         lives--;
+
+        if (lives == 0) {
+            Sound.playSound("gg.wav");
+        } else {
+            Sound.playSound("ouch.wav");
+        }
     }
+
     public void drawSVG(Graphics g) {
 
     }
 
     public void drawCrossHair(Graphics g) {
         if (pntMousePoint != null) {
-            mouseDistance = Math.sqrt((pntMousePoint.getX() - getCenter().getX()) * (pntMousePoint.getX() - getCenter().getX()) + (pntMousePoint.getY() - getCenter().getY()) * (pntMousePoint.getY() - getCenter().getY()));
+
             Graphics2D g2d = (Graphics2D) g;
 
             if (currentWeapon == 1) {
@@ -270,6 +296,8 @@ public class Player extends Character {
     }
 
     public void setOrientationToMouse(){
+        if (pntMousePoint != null)
+            mouseDistance = Math.sqrt((pntMousePoint.getX() - getCenter().getX()) * (pntMousePoint.getX() - getCenter().getX()) + (pntMousePoint.getY() - getCenter().getY()) * (pntMousePoint.getY() - getCenter().getY()));
         //http://stackoverflow.com/questions/2676719/calculating-the-angle-between-the-line-defined-by-two-points
         if (pntMousePoint != null) {
             double delta_x = pntMousePoint.getX() - getCenter().getX();
@@ -279,4 +307,7 @@ public class Player extends Character {
         }
     }
 
+    public void fire() {
+
+    }
 }

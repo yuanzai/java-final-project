@@ -1,9 +1,7 @@
 package edu.uchicago.cs.java.finalproject.mvc.model;
 
 import edu.uchicago.cs.java.finalproject.mvc.controller.Game;
-import edu.uchicago.cs.java.finalproject.sounds.Sound;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,28 +11,43 @@ public class Cc {
     // **************** Global Constants *****************
     public static int PLAYER_PROJECTILE_RANGE = 800;
     public static int PLAYER_PROJECTILE_SPEED = 35;
-    public static int PLAYER_PROJECTILE_COOLDOWN = 3;
+    public static int PLAYER_PROJECTILE_COOLDOWN = 6;
 
-    public static int ENEMY_PROJECTILE_RANGE = 600;
-    public static int ENEMY_PROJECTILE_SPEED = 22;
+    public static int ENEMYA_PROJECTILE_RANGE = 600;
+    public static int ENEMYA_PROJECTILE_SPEED = 25;
+
+    public static int ENEMYB_PROJECTILE_SEEKER_RANGE = 1800;
+    public static int ENEMYB_PROJECTILE_SEEKER_SPEED = 15;
+
 
     public static int PLAYER_LASER_RANGE = 1200;
-    public static int PLAYER_LASER_COOLDOWN = 25;
+    public static int PLAYER_LASER_COOLDOWN = 28;
 
     public static int PLAYER_SPREAD_RANGE = 500;
     public static int PLAYER_SPREAD_SPEED = 30;
-    public static int PLAYER_SPREAD_COOLDOWN = 5;
+    public static int PLAYER_SPREAD_COOLDOWN = 12;
 
-    public static int PLAYER_LIVES = 3;
+    public static int PLAYER_LIVES = 100;
 
-	public static int ENEMY_HITPOINTS = 2;
-	public static int ENEMYBIG_HITPOINTS = 3;
+	public static int ENEMYA_HITPOINTS = 2;
+	public static int ENEMYB_HITPOINTS = 4;
+    public static int ENEMYC_HITPOINTS = 6;
 
+    public static int ENEMYA_MOVE_SPEED = 7;
+    public static int ENEMYB_MOVE_SPEED = 6;
+    public static int ENEMYC_MOVE_SPEED = 3;
 
+    public static int ENEMYA_MOVE_RADIUS = 23;
+    public static int ENEMYB_MOVE_RADIUS = 30;
+    public static int ENEMYC_MOVE_RADIUS = 37;
+
+    public static int TIMER_TOTAL = 30000;
+    public static int TIMER_START = 20000;
+    public static int TIMER_DAMAGE = 1000;
+    public int timer;
 
     // ***************************************************
 
-	private  int nNumFalcon;
 	private  int nLevel;
 	private  long lScore;
 
@@ -46,7 +59,7 @@ public class Cc {
 
     public GameState gameState;
 	// These ArrayLists with capacities set
-	private List<Movable> movDebris = new ArrayList<Movable>(300);
+
 	private List<Movable> movFriends = new ArrayList<Movable>(100);
 	private List<Movable> movFoes = new ArrayList<Movable>(200);
 	private List<Movable> movFloaters = new ArrayList<Movable>(50);
@@ -62,8 +75,6 @@ public class Cc {
 	//added by Dmitriy
 	private static Cc instance = null;
 
-    public static Dimension gameDim;
-
     private int enemyCount;
 
 	// Constructor made private - static Utility class only
@@ -77,19 +88,17 @@ public class Cc {
 		return instance;
 	}
 
-
-	public void initGame(){
-		setScore(0);
-        generateMap();
-	}
-
     public void startLevel(int i) {
-        enemyCount =0;
-        gameState = GameState.InGame;
-        setLevel(i);
         clearAll();
+        generateMap();
+        enemyCount =0;
+        setLevel(i);
         spawnPlayer();
-        spawnFoes(i * 3 + 5);
+        spawnEnemyA(i * 3 + 2);
+        spawnEnemyB(i/2 + 1);
+        spawnEnemyC(i/3 + 1);
+        timer = 0;
+        gameState = GameState.InGame;
     }
 
     public boolean isLevelClear() {
@@ -99,14 +108,28 @@ public class Cc {
     }
 
 	public void spawnPlayer() {
-		player = new Player(100, (int) Game.DIM.getHeight() - 160);
+		player = new Player(100, (int) Game.DIM.getHeight() - 160, PLAYER_LIVES);
 		opsList.enqueue(player, CollisionOp.Operation.ADD);
 	}
 
-    public void spawnFoes(int count) {
+    public void spawnEnemyA(int count) {
         Random r = new Random();
         for (int i = 0; i < count; i++) {
-            opsList.enqueue(new Enemy(r.nextInt((int)map.xBounds-300) + 200, r.nextInt((int)Game.DIM.getHeight()-200) + 100, 20), CollisionOp.Operation.ADD);
+            opsList.enqueue(new EnemyA(r.nextInt((int)map.xBounds-300) + 200, Game.DIM.height - r.nextInt(5) * Map.GROUND_HEIGHT - 100), CollisionOp.Operation.ADD);
+        }
+    }
+
+	public void spawnEnemyB(int count) {
+		Random r = new Random();
+		for (int i = 0; i < count; i++) {
+			opsList.enqueue(new EnemyB(r.nextInt((int)map.xBounds-300) + 200, Game.DIM.height - r.nextInt(5) * Map.GROUND_HEIGHT - 100), CollisionOp.Operation.ADD);
+		}
+	}
+
+    public void spawnEnemyC(int count) {
+        Random r = new Random();
+        for (int i = 0; i < count; i++) {
+            opsList.enqueue(new EnemyC(r.nextInt((int)map.xBounds-300) + 200, Game.DIM.height-100), CollisionOp.Operation.ADD);
         }
     }
 
@@ -138,11 +161,6 @@ public class Cc {
 		movFloaters.clear();
         movFriendlyFire.clear();
         movEnemyFire.clear();
-	}
-	
-	public  boolean isGameOver() {		//if the number of falcons is zero, then game over
-
-		return false;
 	}
 
 	public  int getLevel() {

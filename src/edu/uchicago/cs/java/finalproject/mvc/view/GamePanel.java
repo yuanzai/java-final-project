@@ -1,6 +1,6 @@
 package edu.uchicago.cs.java.finalproject.mvc.view;
 
-import edu.uchicago.cs.java.finalproject.mvc.*;
+import edu.uchicago.cs.java.finalproject.SVG.*;
 import edu.uchicago.cs.java.finalproject.mvc.controller.Game;
 import edu.uchicago.cs.java.finalproject.mvc.model.*;
 
@@ -30,7 +30,6 @@ public class GamePanel extends Panel {
 	private BufferedImage cursorImg;
 	private Cursor blankCursor;
 
-    public int xSpriteOffset;
     public int xMapOffset;
 
 	// ==============================================================
@@ -86,14 +85,30 @@ public class GamePanel extends Panel {
         else
             ShotgunSVG.paint((Graphics2D) grpOff, 140, 61, 50, Color.white);
 
+        Color myColour = new Color(214, 18, 5,150);
+
+        g.setColor(myColour);
+        g.fillRect(20,111-(int)(50 *  (((double)Cc.getInstance().getPlayer().weapon1cooldown)/((double)Cc.PLAYER_PROJECTILE_COOLDOWN))),50,(int)(50 *  (((double)Cc.getInstance().getPlayer().weapon1cooldown)/((double)Cc.PLAYER_PROJECTILE_COOLDOWN))));
+        g.fillRect(80,111-(int)(50 *  (((double)Cc.getInstance().getPlayer().weapon2cooldown)/((double)Cc.PLAYER_LASER_COOLDOWN))),50,(int)(50 *  (((double)Cc.getInstance().getPlayer().weapon2cooldown)/((double)Cc.PLAYER_LASER_COOLDOWN))));
+        g.fillRect(140,111-(int)(50 *  (((double)Cc.getInstance().getPlayer().weapon3cooldown)/((double)Cc.PLAYER_SPREAD_COOLDOWN))),50,(int)(50 *  (((double)Cc.getInstance().getPlayer().weapon3cooldown)/((double)Cc.PLAYER_SPREAD_COOLDOWN))));
+
         grpOff.setColor(Color.white);
         grpOff.drawString("Enemies left: " + Cc.getInstance().getEnemyCount(),20,135);
 
-        if (Cc.getInstance().getPlayer().hitCounter>0) {
-            Color myColour = new Color(200, Cc.getInstance().getPlayer().hitCounter / 2 * 5, Cc.getInstance().getPlayer().hitCounter / 2 * 5, 255 - Cc.getInstance().getPlayer().hitCounter / 2 * 50);
+        if (Cc.getInstance().getPlayer().hitAniCounter >0) {
+            myColour = new Color(200, Cc.getInstance().getPlayer().hitAniCounter / 2 * 5, Cc.getInstance().getPlayer().hitAniCounter / 2 * 5, 255 - Cc.getInstance().getPlayer().hitAniCounter / 2 * 50);
             g.setColor(myColour);
-            g.fillRect(10, 10, 250, 45);
+            g.fillRect(10, 10, 400, 45);
         }
+
+        if (Cc.getInstance().timer < Cc.TIMER_TOTAL) {
+            grpOff.setColor(Color.white);
+            grpOff.drawString("Time left: " + (Cc.TIMER_TOTAL - Cc.getInstance().timer)/1000,20,155);
+        } else {
+            grpOff.drawString("Time left: 0",20,155);
+        }
+
+        grpOff.setColor(Color.white);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -141,7 +156,7 @@ public class GamePanel extends Panel {
 
             //draw them in decreasing level of importance
             //friends will be on top layer and debris on the bottom
-            iterateMovables(grpOff, xSpriteOffset,
+            iterateMovables(grpOff,
                     (ArrayList<Movable>) Cc.getInstance().getMovFriends(),
                     (ArrayList<Movable>) Cc.getInstance().getMovFoes(),
                     (ArrayList<Movable>) Cc.getInstance().getMovFloaters(),
@@ -153,7 +168,6 @@ public class GamePanel extends Panel {
 
 		//draw the double-Buffered Image to the graphics context of the panel
 		g.drawImage(imgOff, 0, 0, this);
-        xSpriteOffset = 0;
 	} 
 
     public void renderUpdate() {
@@ -171,26 +185,41 @@ public class GamePanel extends Panel {
         nFontWidth = fmt.getMaxAdvance();
         nFontHeight = fmt.getHeight();
         // Fill in background with black.
-        grpOff.setColor(Color.black);
-        grpOff.fillRect(0, 0, Game.DIM.width, Game.DIM.height);
+
+        Image bg = createImage(3200, 1200);
+        BackgroundBigSVG.paint((Graphics2D) bg.getGraphics(),0,0);
+        grpOff.drawImage(bg,-xMapOffset, 0, null);
+
+//        grpOff.setColor(Color.black);
+  //      grpOff.fillRect(0, 0, Game.DIM.width, Game.DIM.height);
     }
 
     public void updateStart() {
+
 
         grpOff.setColor(Color.CYAN);
         textWrapper("PRESS SPACE TO START",0,grpOff);
 
         grpOff.setColor(Color.white);
-        textWrapper("W A S D controls",40,grpOff);
-        textWrapper("Left Mouse Click to fire",80,grpOff);
-        textWrapper("Esc to Pause/Quit",120,grpOff);
-        textWrapper("Kill all enemies to win",160,grpOff);
+        textWrapper("W A S D controls",80,grpOff);
+        textWrapper("Left Mouse Click to fire",120,grpOff);
+        textWrapper("Esc to Pause/Quit",160,grpOff);
+        textWrapper("M to Mute/Unmute",200,grpOff);
+
+        grpOff.setColor(Color.yellow);
+        textWrapper("Destroy enemy robots to win",280,grpOff);
+
+        grpOff.setColor(Color.white);
     }
 
     public void updateLevel( int i) {
         grpOff.setColor(Color.white);
-        textWrapper("Level " + i,0,grpOff);
-        textWrapper("Press space to begin", 100, grpOff);
+        textWrapper("Level " + i + " of 5",0,grpOff);
+
+        grpOff.setColor(Color.CYAN);
+        textWrapper("PRESS SPACE TO BEGIN", 100, grpOff);
+
+        grpOff.setColor(Color.white);
     }
 
 
@@ -220,13 +249,14 @@ public class GamePanel extends Panel {
 	}
 	
 	//for each movable array, process it.
-	private void iterateMovables(Graphics g, int offset, ArrayList<Movable>...movMovz){
+	private void iterateMovables(Graphics g, ArrayList<Movable>...movMovz){
 		
 		for (ArrayList<Movable> movMovs : movMovz) {
 			for (Movable mov : movMovs) {
 
 				mov.move();
-                mov.setCenter(new Point(mov.getCenter().x - offset, mov.getCenter().y));
+                //mov.setCenter(new Point(mov.getCenter().x - offset, mov.getCenter().y));
+                mov.setCenter(new Point(mov.getMapPosition().x - xMapOffset, mov.getMapPosition().y));
 				mov.draw(g);
 
 			}

@@ -53,19 +53,17 @@ public class Game implements Runnable {
 
         gmpPanel = new GamePanel(DIM);
         Cc.getInstance().gameState = Cc.GameState.Start;
+
+        // separate listener class for cleanliness
         actionListener = new ActionListener(this);
         gmpPanel.addKeyListener(actionListener);
         gmpPanel.addMouseListener(actionListener);
         gmpPanel.addMouseMotionListener(actionListener);
 
-        clpThrust = Sound.clipForLoopFactory("whitenoise.wav");
 
-        //Media hit = new Media("sounds/background128.mp3");
+        //Used Jlayer to play MP3
         sound = new Sound();
         sound.play("background128.mp3");
-
-        //clpMusicBackground = Sound.clipForLoopFactory("background128.mp3");
-        //clpMusicBackground.loop(-1);
 
     }
 
@@ -73,6 +71,7 @@ public class Game implements Runnable {
     // ==METHODS
     // ===============================================
 
+    // per base code
     public static void main(String args[]) {
         EventQueue.invokeLater(new Runnable() { // uses the Event dispatch thread from Java 5 (refactored)
             public void run() {
@@ -107,14 +106,16 @@ public class Game implements Runnable {
         // this thread animates the scene
         while (Thread.currentThread() == thrAnim) {
 
-            //tick();
+
+            // determines the game state to decide what to render
             if (bStart){
                 if (Cc.getInstance().gameState == Cc.GameState.Start ||
-                        Cc.getInstance().gameState == Cc.GameState.GameOver ||
-                        Cc.getInstance().gameState == Cc.GameState.Died ) {
+                        Cc.getInstance().gameState == Cc.GameState.GameOver ) {
                     startGame();
-                }else if (Cc.getInstance().gameState == Cc.GameState.Level) {
+                }else if (Cc.getInstance().gameState == Cc.GameState.Level  ) {
                     startLevel();
+                } else if (Cc.getInstance().gameState == Cc.GameState.Died) {
+                    Cc.getInstance().gameState = Cc.GameState.Level;
                 }
                 bStart = false;
             }
@@ -129,9 +130,10 @@ public class Game implements Runnable {
             }
 
             if (Cc.getInstance().gameState == Cc.GameState.InGame) {
-                if (Cc.getInstance().getPlayer().lives == 0) {
+                if (Cc.getInstance().getPlayer().lives <= 0) {
                     Cc.getInstance().gameState = Cc.GameState.Died;
                 }
+                tick();
                 processMapOffset();
                 checkGroundCollisions();
                 checkProjectileCollisions();
@@ -162,28 +164,20 @@ public class Game implements Runnable {
         } // end while
     } // end run
 
+
+
+    // In creating a side scroller every sprites has 2 center points
+    // a on-screen center and a map center
+    // the on-screen center relies on the x-offset to move all sprites according on screen but retaining their map position
+    // x offset is control by player moving left and right as well as how close the player is to the boundary of the map
     private void processMapOffset(){
         Player p = Cc.getInstance().getPlayer();
-        if (bLeft) {
-            if (p.getMapPosition().getX() < Cc.getInstance().getMap().xBounds - Game.DIM.getWidth()/2
-                    && p.getMapPosition().getX() > Game.DIM.getWidth()/2){
-                //xMapOffset -= (int) Player.STEP;
-                gmpPanel.xSpriteOffset = (int) -Player.STEP;
-            }
-
-
-        } else if (bRight) {
-            if (p.getMapPosition().getX() < Cc.getInstance().getMap().xBounds - Game.DIM.getWidth()/2
-                    && p.getMapPosition().getX() > Game.DIM.getWidth()/2){
-                xMapOffset += (int) Player.STEP;
-                gmpPanel.xSpriteOffset = (int) Player.STEP;
-            }
-        }
         xMapOffset = Math.min(Math.max((int) (p.getMapPosition().x - Game.DIM.getWidth()/2),0),(int) (Cc.getInstance().getMap().xBounds - Game.DIM.getWidth()));
         gmpPanel.xMapOffset = xMapOffset;
     }
 
     private void checkGroundCollisions() {
+        // checking for sprite collisions with ground.
 
         Player p = Cc.getInstance().getPlayer();
         if (p != null) {
@@ -196,18 +190,19 @@ public class Game implements Runnable {
             // check if player is on the ground
             p.bOnGround = false;
             for (Ground g : map.grounds) {
-                if (Line2D.ptSegDist(g.x1 - xMapOffset, g.y, g.x2 - xMapOffset, g.y,p.getCenter().getX(),basePoint.getY()) == 0.0) {
+                if (Line2D.ptSegDist(g.x1, g.y, g.x2, g.y,p.getMapPosition().getX(),basePoint.getY()) == 0.0) {
                     p.bOnGround = true;
                     break;
                 }
             }
             p.preMove();
 
+            // check if enemy is on ground
             for(Movable enemy : Cc.getInstance().getMovFoes()){
                 Enemy e = (Enemy) enemy;
                 e.bOnGround = false;
                 for (Ground g : map.grounds) {
-                    if (Line2D.ptSegDist(g.x1 - xMapOffset, g.y, g.x2 - xMapOffset, g.y,e.getCenter().getX(),e.getBasePoint().getY()) == 0.0) {
+                    if (Line2D.ptSegDist(g.x1, g.y, g.x2 , g.y,e.getMapPosition().getX(),e.getBasePoint().getY()) == 0.0) {
                         e.bOnGround = true;
                         break;
                     }
@@ -215,46 +210,45 @@ public class Game implements Runnable {
                 e.preMove();
             }
 
-
+            // check moving player ground collision
             if (!p.bOnGround || p.bUp) {
                 for (Ground g : map.grounds) {
-                    if (checkCharacterGroundCollision(p,g))
+                    if (CollisionCheck.checkCharacterGroundCollision(p,g,xMapOffset))
                         break;
                 }
             }
 
+            // check moving enemy ground collision
             for(Movable enemy : Cc.getInstance().getMovFoes()){
                 Enemy e = (Enemy) enemy;
                 if (!e.bOnGround) {
                     for (Ground g : map.grounds) {
-                        if (checkCharacterGroundCollision(e, g))
+                        if (CollisionCheck.checkCharacterGroundCollision(e, g, xMapOffset))
                             break;
                     }
                 }
             }
 
-
+            // check friendly/ hostile projectile ground collision
             for (Ground g : map.grounds) {
                 for (Movable projectile : Cc.getInstance().getMovFriendlyFire()) {
                     if (projectile instanceof Projectile)
-                        checkProjectileGroundCollisions((Projectile) projectile, g);
+                        CollisionCheck.checkProjectileGroundCollisions((Projectile) projectile, g, xMapOffset);
                 }
-            }
-
-            for (Ground g : map.grounds) {
                 for (Movable projectile : Cc.getInstance().getMovEnemyFire()) {
                     if (projectile instanceof Projectile)
-                        checkProjectileGroundCollisions((Projectile) projectile, g);
+                        CollisionCheck.checkProjectileGroundCollisions((Projectile) projectile, g, xMapOffset);
                 }
             }
         }
     }
 
     private void checkProjectileCollisions(){
+        // checking for character(player/enemy sprites) collisions with projectiles
         for (Movable projectile : Cc.getInstance().getMovFriendlyFire()) {
             for (Movable enemy : Cc.getInstance().getMovFoes()) {
                 if (projectile instanceof Projectile) {
-                    if (checkProjectileHitCharacter((Projectile) projectile, (Character) enemy)) {
+                    if (CollisionCheck.checkProjectileHitCharacter((Projectile) projectile, (Character) enemy)) {
                         Cc.getInstance().getOpsList().enqueue(projectile, CollisionOp.Operation.REMOVE);
                         ((Enemy) enemy).isHit();
                     }
@@ -264,7 +258,7 @@ public class Game implements Runnable {
 
         for (Movable projectile : Cc.getInstance().getMovEnemyFire()) {
             if (projectile instanceof Projectile) {
-                if (checkProjectileHitCharacter((Projectile) projectile, (Character) Cc.getInstance().getPlayer())) {
+                if (CollisionCheck.checkProjectileHitCharacter((Projectile) projectile, (Character) Cc.getInstance().getPlayer())) {
                     Cc.getInstance().getPlayer().isHit();
                     Cc.getInstance().getOpsList().enqueue(projectile, CollisionOp.Operation.REMOVE);
                 }
@@ -277,9 +271,7 @@ public class Game implements Runnable {
         for(Movable enemy : Cc.getInstance().getMovFoes()){
             Enemy e = (Enemy) enemy;
             e.turnToPlayer(Cc.getInstance().getPlayer());
-            if (e.fireCountdown == 0)
-                e.fire();
-
+            e.fire();
         }
     }
 
@@ -288,167 +280,53 @@ public class Game implements Runnable {
         Player p = Cc.getInstance().getPlayer();
         if (!p.bPressed)
             return;
+
         switch (p.currentWeapon) {
             case 1:
                 if (p.weapon1cooldown == 0) {
-                    Cc.getInstance().getOpsList().enqueue(new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_PROJECTILE_RANGE, Cc.PLAYER_PROJECTILE_SPEED, false), CollisionOp.Operation.ADD);
+                    Projectile projectile = new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_PROJECTILE_RANGE, Cc.PLAYER_PROJECTILE_SPEED, 6);
+                    // Create inaccurate projectiles for aiming further
+                    projectile.initForInaccurateProjectile(p);
+                    Cc.getInstance().getOpsList().enqueue(projectile, CollisionOp.Operation.ADD);
                     Sound.playSound("projectile.wav");
-                    p.weapon1cooldown = 5;
+                    p.weapon1cooldown = Cc.PLAYER_PROJECTILE_COOLDOWN;
                 }
                 break;
             case 2:
                 if (p.weapon2cooldown == 0){
+                    // determine laser length, aka if laser hits anything
                     Laser laser = new Laser(p,Color.white,Cc.getInstance().getMap(),Cc.PLAYER_LASER_RANGE);
-                    Point pt = checkLaserCollision(laser);
+                    Point pt = CollisionCheck.checkLaserCollision(laser);
                     if (pt!= null) {
                         laser.updateEndPoint(pt);
                     }
                     laser.updateXOffset(xMapOffset);
                     Cc.getInstance().getOpsList().enqueue(laser, CollisionOp.Operation.ADD);
                     Sound.playSound("laser.wav");
-                    p.weapon2cooldown = 25;
+                    p.weapon2cooldown = Cc.PLAYER_LASER_COOLDOWN;
                 }
                 break;
             case 3:
                 if (p.weapon3cooldown == 0){
-                    Projectile spread1 = new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_SPREAD_RANGE, Cc.PLAYER_SPREAD_SPEED, true);
+                    // fires 3 projectiles
+                    Projectile spread1 = new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_SPREAD_RANGE, Cc.PLAYER_SPREAD_SPEED, 6);
                     spread1.initForSpreadProjectiles(p.getOrientation()-4);
-                    Projectile spread2 = new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_SPREAD_RANGE, Cc.PLAYER_SPREAD_SPEED, true);
+                    Projectile spread2 = new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_SPREAD_RANGE, Cc.PLAYER_SPREAD_SPEED, 6);
                     spread2.initForSpreadProjectiles(p.getOrientation());
-                    Projectile spread3 = new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_SPREAD_RANGE, Cc.PLAYER_SPREAD_SPEED, true);
+                    Projectile spread3 = new Projectile(Cc.getInstance().getPlayer(), Color.white, Cc.PLAYER_SPREAD_RANGE, Cc.PLAYER_SPREAD_SPEED, 6);
                     spread3.initForSpreadProjectiles(p.getOrientation()+4);
                     Cc.getInstance().getOpsList().enqueue(spread1, CollisionOp.Operation.ADD);
                     Cc.getInstance().getOpsList().enqueue(spread2, CollisionOp.Operation.ADD);
                     Cc.getInstance().getOpsList().enqueue(spread3, CollisionOp.Operation.ADD);
                     Sound.playSound("shotgun.wav");
-                    p.weapon3cooldown = 5;
+                    p.weapon3cooldown = Cc.PLAYER_SPREAD_COOLDOWN;
                 }
                 break;
         }
     }
 
-    private Point checkLaserCollision(Laser laser){
-        // collision with ground
-        double min_length = Double.MAX_VALUE;
-        Object min_obj = null;
-        Point min_point = laser.endPoint;
 
-        for (Ground g : Cc.getInstance().getMap().grounds){
-            if (Line2D.linesIntersect(laser.startPoint.getX(), laser.startPoint.getY(), laser.endPoint.getX(),laser.endPoint.getY(), g.x1,g.y,g.x2,g.y)) {
-
-                Point p = intersectionPoint(laser.startPoint.getX(), laser.startPoint.getY(), laser.endPoint.getX(),laser.endPoint.getY(), g.x1,g.y,g.x2,g.y);
-                if (p.distance(laser.startPoint) < min_length) {
-                    min_length = p.distance(laser.startPoint);
-                    min_obj = g;
-                    min_point = p;
-                }
-            }
-        }
-
-        for (Movable enemy : Cc.getInstance().getMovFoes()){
-            double x = enemy.getMapPosition().getX();
-            double x1 = x - enemy.getRadius();
-            double x2 = x + enemy.getRadius();
-
-            double y = enemy.getMapPosition().getY();
-            double y1 = y - enemy.getRadius();
-            double y2 = y + enemy.getRadius();
-
-            if (Line2D.linesIntersect(laser.startPoint.getX(), laser.startPoint.getY(), laser.endPoint.getX(),laser.endPoint.getY(), x1,y,x2,y)) {
-                Point p = intersectionPoint(laser.startPoint.getX(), laser.startPoint.getY(), laser.endPoint.getX(),laser.endPoint.getY(), x1,y,x2,y);
-                System.out.println(p);
-                if (p.distance(laser.startPoint) < min_length) {
-
-                    min_length = p.distance(laser.startPoint);
-                    min_obj = enemy;
-                    min_point = p;
-                    System.out.println(p);
-                }
-            } else if (Line2D.linesIntersect(laser.startPoint.getX(), laser.startPoint.getY(), laser.endPoint.getX(),laser.endPoint.getY(), x,y1,x,y2)) {
-                Point p = intersectionPoint(laser.startPoint.getX(), laser.startPoint.getY(), laser.endPoint.getX(),laser.endPoint.getY(), x,y1,x,y2);
-                if (p.distance(laser.startPoint) < min_length) {
-                    min_length = p.distance(laser.startPoint);
-                    min_obj = enemy;
-                    min_point = p;
-                }
-            }
-        }
-
-        if (min_obj instanceof Enemy) {
-            ((Enemy) min_obj).isHit();
-        }
-
-        return min_point;
-    }
-
-    private Point intersectionPoint(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4) {
-
-        // reimplemented from here
-        // http://stackoverflow.com/questions/31506740/java-find-intersection-of-two-lines
-
-        double m1 = (y2-y1)/ (x2-x1);
-        double m2 = (y4-y3)/ (x4-x3);
-
-        double int1 = y1 - m1 * x1;
-        double int2 = y3 - m2 * x3;
-
-        double x;
-        double y;
-        if (x4 == x3) {
-            x = x3;
-            y = m1 * x + int1;
-
-        } else if(x1==x2) {
-            x = x1;
-            y = m2 * x + int2;
-        } else {
-            x = (int1 - int2) / (m2 - m1);
-            y = m2 * x + int2;
-        }
-
-
-        return new Point((int) x, (int) y);
-
-    }
-    private boolean checkCharacterGroundCollision(Character p, Ground g) {
-        Point basePoint = p.getBasePoint();
-        Point headPoint = p.getHeadPoint();
-
-        if (Line2D.linesIntersect(basePoint.getX(), basePoint.getY(), basePoint.getX() + p.getDeltaX(), basePoint.getY() + p.getDeltaY(), g.x1 - xMapOffset, g.y, g.x2 - xMapOffset, g.y) &&
-                p.getDeltaY() > 0) {
-            // landing collision on ground
-            p.setDeltaY(g.y - basePoint.getY());
-            return true;
-        } else if (Line2D.linesIntersect(headPoint.getX(), headPoint.getY(), headPoint.getX() + p.getDeltaX(), headPoint.getY() + p.getDeltaY(), g.x1 - xMapOffset, g.y, g.x2 - xMapOffset, g.y) &&
-                p.getDeltaY() < 0) {
-            // jumping collision on ground
-            p.iJumpCounter = 0;
-            p.setDeltaY(g.y - headPoint.getY());
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkProjectileGroundCollisions(Projectile p, Ground g) {
-        if (Line2D.linesIntersect(p.getCenter().getX(), p.getCenter().getY(), p.getCenter().getX() + p.getDeltaX(), p.getCenter().getY() + p.getDeltaY(), g.x1 - xMapOffset, g.y, g.x2 - xMapOffset, g.y)) {
-            p.setExpire(0);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkProjectileHitCharacter(Projectile p, Character c) {
-        if (p.getCenter().distance(c.getCenter()) < (p.getRadius() + c.getRadius())) {
-            return true;
-        }
-        return false;
-    }
-
-    public void playerFireProjectile() {
-
-
-    }
-
+    // per base code
     private void opsDequeue() {
         //we are dequeuing the opsList and performing operations in serial to avoid mutating the movable arraylists while iterating them above
         while(!Cc.getInstance().getOpsList().isEmpty()){
@@ -482,6 +360,7 @@ public class Game implements Runnable {
         System.gc();
     }
 
+    // per base code
     private void collisionOperation(CollisionOp.Operation operation, Movable mov, java.util.List list) {
         if (operation == CollisionOp.Operation.ADD){
             list.add(mov);
@@ -490,6 +369,7 @@ public class Game implements Runnable {
         }
     }
 
+    // per base code
     //some methods for timing events in the game,
     //such as the appearance of UFOs, floaters (power-ups), etc.
     public void tick() {
@@ -497,36 +377,28 @@ public class Game implements Runnable {
             nTick = 0;
         else
             nTick++;
+        Cc.getInstance().timer += ANI_DELAY;
+        if (Cc.getInstance().timer > Cc.getInstance().TIMER_TOTAL){
+            if ((nTick - Cc.getInstance().TIMER_TOTAL/ ANI_DELAY) % (Cc.getInstance().TIMER_DAMAGE/ANI_DELAY) == 0)
+                Cc.getInstance().getPlayer().isHit();
+        }
     }
 
     public int getTick() {
         return nTick;
     }
 
-    // Called when user presses 's'
     public void startGame() {
         Cc.getInstance().clearAll();
-        Cc.getInstance().initGame();
         Cc.getInstance().setLevel(1);
         Cc.getInstance().gameState = Cc.GameState.Level;
-        //if (!bMuted)
-        // clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void startLevel(){
         Cc.getInstance().startLevel(Cc.getInstance().getLevel());
-        Cc.getInstance().getPlayer().lives = Cc.PLAYER_LIVES;
         xMapOffset=0;
         bLeft = false;
         bRight = false;
-    }
-
-
-    // Varargs for stopping looping-music-clips
-    private static void stopLoopingSounds(Clip... clpClips) {
-        for (Clip clp : clpClips) {
-            clp.stop();
-        }
     }
 
     public GamePanel getGmpPanel() {

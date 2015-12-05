@@ -47,6 +47,7 @@ public abstract class Sprite implements Movable {
 	private Point[] pntCoords; //an array of points used to draw polygon
 	private int[] nXCoords;
 	private int[] nYCoords;
+    public boolean isFill;
 
 
 
@@ -305,7 +306,11 @@ public abstract class Sprite implements Movable {
         
 
         g.setColor(getColor());
-        g.drawPolygon(getXcoords(), getYcoords(), dDegrees.length);
+        if (isFill) {
+            g.fillPolygon(getXcoords(), getYcoords(), dDegrees.length);
+        }else {
+            g.drawPolygon(getXcoords(), getYcoords(), dDegrees.length);
+        }
     }
     
 

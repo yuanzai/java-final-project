@@ -17,10 +17,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javazoom.jl.player.Player;
 
 public class Sound {
-
+    public static boolean isMuted;
 	//for individual wav sounds (not looped)
 	//http://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java
 	public static synchronized void playSound(final String strPath) {
+        if (isMuted)
+            return;
 	    new Thread(new Runnable() { 
 	      public void run() {
 	        try {
@@ -79,11 +81,19 @@ public class Sound {
 
 	private String filename;
 	private Player player;
+    private int lastStop;
+    private Thread t;
 
 	public void close() { if (player != null) player.close(); }
 
 	// play the MP3 file to the sound card
+    public void play() {
+        play(filename);
+    }
+
 	public void play(String filename) {
+        this.filename = filename;
+
 		try {
 			FileInputStream fis     = new FileInputStream(Sound.class.getResource(filename).getFile());
 			BufferedInputStream bis = new BufferedInputStream(fis);
@@ -95,13 +105,14 @@ public class Sound {
 		}
 
 		// run in new thread to play in background
-		new Thread() {
+		t = new Thread() {
 			public void run() {
-				try { player.play(); }
-				catch (Exception e) { System.out.println(e); }
+                try {
+                    player.play();
+                } catch (Exception e) { System.out.println(e); }
 			}
-		}.start();
+		};
+        t.start();
 
 	}
-
 }
