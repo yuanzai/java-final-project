@@ -27,7 +27,7 @@ public class Cc {
     public static int PLAYER_SPREAD_SPEED = 30;
     public static int PLAYER_SPREAD_COOLDOWN = 12;
 
-    public static int PLAYER_LIVES = 100;
+    public static int PLAYER_LIVES = 10;
 
 	public static int ENEMYA_HITPOINTS = 2;
 	public static int ENEMYB_HITPOINTS = 4;
@@ -42,8 +42,7 @@ public class Cc {
     public static int ENEMYC_MOVE_RADIUS = 37;
 
     public static int TIMER_TOTAL = 30000;
-    public static int TIMER_START = 20000;
-    public static int TIMER_DAMAGE = 1000;
+    public static int TIMER_DAMAGE = 2000;
     public int timer;
 
     // ***************************************************

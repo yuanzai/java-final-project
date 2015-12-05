@@ -52,7 +52,7 @@ public class Projectile extends Sprite {
 
     public void initForInaccurateProjectile(Player p) {
         // Create inaccurate projectiles for aiming further
-        
+
         if (p.mouseDistance >=0)
             setOrientation(getOrientation() + (new Random().nextInt((int) p.mouseDistance * 2) - p.mouseDistance) / 240);
         setDeltaX(Math.cos(Math.toRadians(getOrientation())) * speed);
