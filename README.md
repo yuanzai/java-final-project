@@ -9,3 +9,6 @@ My implementations include:
 - gravity/jumping mechanic
 - seeking projectile
 - laser projectile collision with other sprites or floors
+
+## Screenshot
+![Alt text](https://github.com/yuanzai/java-final-project/blob/master/java_game.png "Shooter")
